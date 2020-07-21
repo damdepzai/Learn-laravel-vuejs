@@ -4,6 +4,7 @@ require('./bootstrap');
 /* Core */
 import Vue from 'vue'
 import Buefy from 'buefy'
+import Bulma from 'bulma'
 
 /* Router & Store */
 import router from './router'
@@ -30,8 +31,25 @@ Vue.component('App', App)
 
 /* Buefy */
 Vue.use(Buefy)
+Vue.use(Bulma)
 
 /* This is main entry point */
+window.Event = new class {
+  constructor() {
+    this.vue = new Vue();
+  }
+
+  emit(event, data = null) {
+    this.vue.$emit(event, data);
+  }
+
+  listen(event, callback) {
+    this.vue.$on(event, callback);
+  }
+  destroy(event,callback){
+    this.vue.$off(event, callback);
+  }
+};
 
 new Vue({
   store,

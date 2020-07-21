@@ -1,24 +1,35 @@
 <template>
   <div id="app">
-    <nav-bar/>
-    <aside-menu :menu="menu"/>
-    <router-view/>
-    <footer-bar/>
+      <div class="dashboard" v-if="isLogin == true">
+        <nav-bar/>
+        <aside-menu :menu="menu"/>
+        <router-view/>
+        <footer-bar/>
+      </div>
+      <div class="login" v-if="isLogin == false">
+          <router-view/>
+      </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import NavBar from '@/components/NavBar'
-import AsideMenu from '@/components/AsideMenu'
-import FooterBar from '@/components/FooterBar'
-
+import NavBar from '@/components/NavBar';
+import AsideMenu from '@/components/AsideMenu';
+import FooterBar from '@/components/FooterBar';
+import Login from './auth/Login.vue';
 export default {
   name: 'home',
   components: {
     FooterBar,
     AsideMenu,
-    NavBar
+    NavBar,
+    Login
+  },
+  data(){
+    return{
+      isLogin:false,
+    }
   },
   computed: {
     menu () {
@@ -90,17 +101,25 @@ export default {
     }
   },
   created () {
-    axios
-      .get('/user')
-      .then(r => {
-        this.$store.commit('user', r.data.data)
-      })
-      .catch(err => {
-        this.$buefy.toast.open({
-          message: `Error: ${err.message}`,
-          type: 'is-danger'
-        })
-      })
+    Event.listen('login',value =>{
+      this.isLogin =value
+    })
   }
 }
 </script>
+<style lang="scss" scoped>
+  .login{
+    padding: 6px;
+    position: relative;
+    left: -110px;
+    top:-100px;
+  }
+  @media only screen and (max-width: 800px) {
+    .login{
+      position: relative;
+      left: -20px;
+      top:-30px
+
+    }
+  }
+</style>
