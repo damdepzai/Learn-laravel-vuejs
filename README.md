@@ -11,3 +11,5 @@
 `php artisan migrate`
 ### [Optional]: Seed the database
  `php artisan db:seed`
+ ### NPM
+`npm run watch'
