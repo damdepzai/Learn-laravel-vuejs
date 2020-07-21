@@ -12,4 +12,4 @@
 ### [Optional]: Seed the database
  `php artisan db:seed`
  ### NPM
-`npm run watch'
+`npm run watch`
