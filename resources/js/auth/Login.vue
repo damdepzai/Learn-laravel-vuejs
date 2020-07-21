@@ -78,7 +78,7 @@
       methods:{
           login(){
             Event.emit('login',true);
-            this.$router.push('/home');
+            this.$router.push('/');
           }
       }
     }

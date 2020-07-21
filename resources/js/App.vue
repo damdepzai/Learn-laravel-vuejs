@@ -28,7 +28,7 @@ export default {
   },
   data(){
     return{
-      isLogin:false,
+      isLogin:true,
     }
   },
   computed: {
