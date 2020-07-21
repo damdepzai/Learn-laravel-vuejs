@@ -6,6 +6,9 @@ import Vue from 'vue'
 import Buefy from 'buefy'
 import Bulma from 'bulma'
 
+import SimpleVueValidation from 'simple-vue-validator';
+Vue.use(SimpleVueValidation);
+
 /* Router & Store */
 import router from './router'
 import store from './store'
@@ -50,6 +53,11 @@ window.Event = new class {
     this.vue.$off(event, callback);
   }
 };
+// var Validator = SimpleVueValidation.Validator;
+Vue.mixin({
+  methods: {
+    // Validator
+  }})
 
 new Vue({
   store,

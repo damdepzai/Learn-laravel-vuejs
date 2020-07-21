@@ -15,22 +15,23 @@
 
 
               <div class="card-content">
-                <form method="POST" action="https://admin-one-laravel-free.justboil.me/login">
-                  <input type="hidden" name="_token" value="lXl5g286mj2dgtwYbFFfhi6wyk8su0ZlH5hytICq">
                   <div class="field">
-                    <label class="label" for="email">E-Mail Address</label>
+                    <label class="label" for="email">Username</label>
                     <div class="control">
-                      <input id="email" type="email" class="input " name="email" value="damnv@gmail.com" required="" autocomplete="email" autofocus="">
+                      <input id="email" type="email" class="input" :class="{'is-danger': validation.hasError('email')}"  v-model="email">
                     </div>
+                    <p class="help is-danger" role="alert">
+                      {{ validation.firstError('email')}}
+                    </p>
                   </div>
 
                   <div class="field">
                     <label class="label" for="password">Password</label>
                     <div class="control">
-                      <input id="password" type="password" class="input  is-danger " name="password" required="" autocomplete="current-password" autofocus="">
+                      <input id="password" type="password" class="input " :class="{'is-danger': validation.hasError('password')}"   v-model="password">
                     </div>
                     <p class="help is-danger" role="alert">
-                      The password must be at least 8 characters.
+                      {{ validation.firstError('password')}}
                     </p>
                   </div>
 
@@ -52,7 +53,6 @@
                     <router-link class="button is-black is-outlined" :to="{name:'register'}">Register</router-link>
 
                   </div>
-                </form>
               </div>
 
             </div>
@@ -68,17 +68,36 @@
 </template>
 
 <script>
+  import SimpleVueValidation from 'simple-vue-validator';
+  const Validator = SimpleVueValidation.Validator;
     export default {
         name: "Login",
       data(){
           return{
-
+            email:'',
+            password:''
           }
+      },
+      validators: {
+        email: function (value) {
+          return Validator.value(value).required('Không được để trống');
+        },
+        password: function (value) {
+          return Validator.value(value).required('Không được để trống');
+        },
+
       },
       methods:{
           login(){
-            Event.emit('login',true);
-            this.$router.push('/');
+            var  $this = this;
+            this.$validate()
+              .then(function (success) {
+                if (success) {
+                    Event.emit('login',true);
+                  $this.$router.push('/');
+                }
+              });
+
           }
       }
     }
