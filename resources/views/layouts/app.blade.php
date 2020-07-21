@@ -24,13 +24,7 @@
 </head>
 <body>
 
-<div id="app">
-
-    @yield('content')
-
-</div>
-
-@stack('bottom')
+<div id="app"></div>
 
 </body>
 </html>
